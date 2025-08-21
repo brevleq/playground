@@ -11,6 +11,7 @@ public class LongestUnrepeatedSubstringExtractor implements SubstringExtractable
             return "";
         if (original.length() <= 1)
             return original;
+
         int startIndex = 0;
         StringBuilder longestSubstring = new StringBuilder();
         while (startIndex < original.length()) {
@@ -26,6 +27,7 @@ public class LongestUnrepeatedSubstringExtractor implements SubstringExtractable
         Set<Character> set = new HashSet<>();
         int endIndex = startIndex;
         StringBuilder currentSubstring = new StringBuilder();
+
         while (endIndex < original.length()) {
             Character character = original.charAt(endIndex);
             if (set.contains(character))
