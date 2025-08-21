@@ -5,7 +5,6 @@ import java.util.Set;
 
 public class LongestUnrepeatedSubstringExtractor implements SubstringExtractable {
 
-
     @Override
     public String extract(String original) {
         if (original == null)
@@ -13,27 +12,28 @@ public class LongestUnrepeatedSubstringExtractor implements SubstringExtractable
         if (original.length() <= 1)
             return original;
         int startIndex = 0;
-        String longestSubstring = "";
+        StringBuilder longestSubstring = new StringBuilder();
         while (startIndex < original.length()) {
-            Set<Character> set = new HashSet<>();
-            int endIndex = startIndex;
-            boolean foundRepeated = false;
-            String currentSubstring = "";
-            while (endIndex < original.length() && !foundRepeated) {
-                Character character = original.charAt(endIndex);
-                if (set.contains(character)) {
-                    foundRepeated = true;
-                } else {
-                    currentSubstring += character;
-                    set.add(character);
-                }
-                endIndex++;
-            }
-            if (currentSubstring.length() > longestSubstring.length()) {
+            StringBuilder currentSubstring = extractCurrentSubstring(original, startIndex);
+            if (currentSubstring.length() > longestSubstring.length())
                 longestSubstring = currentSubstring;
-            }
             startIndex++;
         }
-        return longestSubstring;
+        return longestSubstring.toString();
+    }
+
+    private StringBuilder extractCurrentSubstring(String original, int startIndex) {
+        Set<Character> set = new HashSet<>();
+        int endIndex = startIndex;
+        StringBuilder currentSubstring = new StringBuilder();
+        while (endIndex < original.length()) {
+            Character character = original.charAt(endIndex);
+            if (set.contains(character))
+                return currentSubstring;
+            currentSubstring.append(character);
+            set.add(character);
+            endIndex++;
+        }
+        return currentSubstring;
     }
 }
